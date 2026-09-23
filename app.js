@@ -1,4 +1,5 @@
 const listingRoutes = require("./routes/listings");
+const bookingRoutes = require("./routes/bookings");
 const Listing = require("./models/Listings");
 const authRoutes = require("./routes/auth");
 const session = require("express-session");
@@ -22,7 +23,6 @@ const app = express();
 const PORT = 3000;
 
 app.set("view engine", "ejs");
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
@@ -34,6 +34,7 @@ app.use(
     })
 );
 app.use(loadCurrentUser);
+app.use("/bookings", bookingRoutes);
 app.use("/api/listings", listingRoutes);
 app.use("/api/auth", authRoutes);
 
@@ -47,16 +48,49 @@ app.get("/register", (req, res) => {
 });
 app.get("/listings", async (req, res) => {
     try {
-        const listings = await Listing.find();
+
+        const { search } = req.query;
+
+        let filter = {};
+
+        if (search) {
+            filter = {
+                $or: [
+                    {
+                        title: {
+                            $regex: search,
+                            $options: "i"
+                        }
+                    },
+                    {
+                        location: {
+                            $regex: search,
+                            $options: "i"
+                        }
+                    },
+                    {
+                        category: {
+                            $regex: search,
+                            $options: "i"
+                        }
+                    }
+                ]
+            };
+        }
+
+        const listings = await Listing.find(filter);
 
         res.render("listings/index", {
-            listings: listings
+            listings: listings,
+            search: search || ""
         });
 
     } catch (error) {
+
         console.error(error);
 
         res.status(500).send("Failed to load listings");
+
     }
 });
 

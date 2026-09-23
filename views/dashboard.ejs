@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,13 +28,31 @@
 
     <main class="container py-5">
 
-        <h1>
-            Welcome to your Dashboard
-        </h1>
+        <div class="p-5 bg-light rounded">
 
-        <p class="text-muted">
-            You are successfully logged in.
-        </p>
+            <h1>
+                Welcome, <%= currentUser.username %>!
+            </h1>
+
+            <p class="lead">
+                Welcome to your Outpost dashboard.
+            </p>
+
+            <a
+                href="/listings"
+                class="btn btn-primary"
+            >
+                Explore Listings
+            </a>
+
+            <a
+                href="/bookings"
+                class="btn btn-outline-primary"
+            >
+                My Bookings
+            </a>
+
+        </div>
 
     </main>
 

@@ -20,6 +20,36 @@
 
 
     <main class="container py-5">
+        <form
+    action="/listings"
+    method="GET"
+    class="row justify-content-center mb-4"
+>
+
+    <div class="col-md-6">
+
+        <input
+            type="text"
+            name="search"
+            class="form-control"
+            placeholder="Search cabins, camping, locations..."
+            value="<%= search %>"
+        >
+
+    </div>
+
+    <div class="col-md-2">
+
+        <button
+            type="submit"
+            class="btn btn-primary w-100"
+        >
+            Search
+        </button>
+
+    </div>
+
+</form>
 
         <div class="text-center mb-5">
 

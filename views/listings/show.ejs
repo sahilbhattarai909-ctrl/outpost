@@ -75,20 +75,89 @@
 
                 <% if (listing.available) { %>
 
-                    <button class="btn btn-success">
-                        Available
-                    </button>
+    <p class="text-success">
+        Available
+    </p>
 
-                <% } else { %>
+    <% if (currentUser) { %>
 
-                    <button
-                        class="btn btn-secondary"
-                        disabled
-                    >
-                        Not Available
-                    </button>
+        <form
+            action="/bookings/create/<%= listing._id %>"
+            method="POST"
+        >
 
-                <% } %>
+            <div class="mb-3">
+
+                <label
+                    for="date"
+                    class="form-label"
+                >
+                    Booking Date
+                </label>
+
+                <input
+                    type="date"
+                    id="date"
+                    name="date"
+                    class="form-control"
+                    required
+                >
+
+            </div>
+
+
+            <div class="mb-3">
+
+                <label
+                    for="guests"
+                    class="form-label"
+                >
+                    Number of Guests
+                </label>
+
+                <input
+                    type="number"
+                    id="guests"
+                    name="guests"
+                    class="form-control"
+                    min="1"
+                    value="1"
+                    required
+                >
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn btn-primary"
+            >
+                Book Now
+            </button>
+
+        </form>
+
+    <% } else { %>
+
+        <a
+            href="/login"
+            class="btn btn-primary"
+        >
+            Login to Book
+        </a>
+
+    <% } %>
+
+<% } else { %>
+
+    <button
+        class="btn btn-secondary"
+        disabled
+    >
+        Not Available
+    </button>
+
+<% } %>
 
                 <br><br>
 
